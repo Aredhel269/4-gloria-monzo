@@ -6,4 +6,5 @@ export interface TaskRepository {
     deleteTask (id: number): void
     listTask (): Task[]
     findIndexById(id: number): number;
+    updateList (task: Task): Task
 }

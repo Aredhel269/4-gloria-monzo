@@ -1,0 +1,170 @@
+Per desplegar una API REST seguint l'estructura i les indicacions que vam establir anteriorment, aquí tens els passos detallats:
+
+### 1. Defineix l'entitat de la tasca
+
+1. Crea el fitxer `task.ts` dins la carpeta `domain/entities/`.
+2. Defineix l'estructura de la tasca, incloent els atributs com `id`, `description` i `completed`.
+
+```typescript
+// domain/entities/task.ts
+export interface Task {
+    id: string;
+    description: string;
+    completed: boolean;
+}
+```
+
+### 2. Defineix el repositori de tasques
+
+1. Crea el fitxer `taskRepository.ts` dins la carpeta `domain/usecases/`.
+2. Defineix la interfície `TaskRepository` amb els mètodes per gestionar tasques.
+
+```typescript
+// domain/usecases/taskRepository.ts
+import { Task } from "../entities/task";
+
+export interface TaskRepository {
+    create(task: Task): Task;
+    findById(id: string): Task | undefined;
+    update(task: Task): Task | undefined;
+    delete(id: string): void;
+    findAll(): Task[];
+}
+```
+
+### 3. Implementa el repositori de tasques
+
+1. Crea el fitxer `taskRepositoryImpl.ts` dins la carpeta `infrastructure/database/`.
+2. Implementa els mètodes de la interfície `TaskRepository` utilitzant un array com a emmagatzematge temporal.
+
+```typescript
+// infrastructure/database/taskRepositoryImpl.ts
+import { Task } from "../../domain/entities/task";
+import { TaskRepository } from "../../domain/usecases/taskRepository";
+
+export class TaskRepositoryImpl implements TaskRepository {
+    private tasks: Task[] = [];
+
+    create(task: Task): Task {
+        this.tasks.push(task);
+        return task;
+    }
+
+    findById(id: string): Task | undefined {
+        return this.tasks.find(task => task.id === id);
+    }
+
+    update(task: Task): Task | undefined {
+        const index = this.tasks.findIndex(t => t.id === task.id);
+        if (index !== -1) {
+            this.tasks[index] = task;
+            return task;
+        }
+        return undefined;
+    }
+
+    delete(id: string): void {
+        this.tasks = this.tasks.filter(task => task.id !== id);
+    }
+
+    findAll(): Task[] {
+        return this.tasks;
+    }
+}
+```
+
+### 4. Implementa els casos d'ús
+
+1. Crea els fitxers `createTaskUsecase.ts`, `deleteTaskUsecase.ts`, `getTaskUsecase.ts` i `putTaskUsecase.ts` dins la carpeta `applications/usecase/`.
+2. Implementa la lògica dels casos d'ús per a cada operació CRUD utilitzant el repositori de tasques.
+
+```typescript
+// applications/usecase/createTaskUsecase.ts
+import { Task } from "../../domain/entities/task";
+import { TaskRepository } from "../../domain/usecases/taskRepository";
+
+export class CreateTaskUsecase {
+    constructor(private taskRepository: TaskRepository) {}
+
+    execute(task: Task): Task {
+        return this.taskRepository.create(task);
+    }
+}
+```
+
+(Repeteix aquest procés per als altres casos d'ús amb les respectives lògiques de negoci)
+
+### 5. Implementa els controladors
+
+1. Crea el fitxer `taskController.ts` dins la carpeta `interfaces/controllers/`.
+2. Implementa els controladors per a les operacions CRUD de la tasca, utilitzant els casos d'ús corresponents.
+
+```typescript
+// interfaces/controllers/taskController.ts
+import express, { Request, Response } from 'express';
+import { Task } from '../../domain/entities/task';
+import { CreateTaskUsecase } from '../../applications/usecase/createTaskUsecase';
+import { TaskRepositoryImpl } from '../../infrastructure/database/taskRepositoryImpl';
+
+const router = express.Router();
+const taskRepository = new TaskRepositoryImpl();
+const createTaskUsecase = new CreateTaskUsecase(taskRepository);
+
+router.post('/', (req: Request, res: Response) => {
+    const task: Task = req.body;
+    const createdTask = createTaskUsecase.execute(task);
+    res.status(201).json(createdTask);
+});
+
+// Implementa els altres endpoints CRUD aquí
+
+export default router;
+```
+
+### 6. Configura l'aplicació Express.js
+
+1. Crea el fitxer `app.ts` dins la carpeta `interfaces/http/`.
+2. Configura l'aplicació Express.js, defineix les rutes i utilitza els controladors.
+
+```typescript
+// interfaces/http/app.ts
+import express from 'express';
+import taskController from '../controllers/taskController';
+
+const app = express();
+
+app.use(express.json());
+app.use('/api/tasks', taskController);
+
+export default app;
+```
+
+### 7. Inicia el servidor
+
+1. Crea el fitxer `server.ts` dins la carpeta `infrastructure/server/`.
+2. Configura i inicia el servidor Express.js.
+
+```typescript
+// infrastructure/server/server.ts
+import express from 'express';
+import app from '../http/app';
+
+const server = express();
+const port = process.env.PORT || 3000;
+
+server.use(app);
+
+server.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
+```
+
+### 8. Inicia l'aplicació
+
+1. A la carpeta arrel del projecte, crea un fitxer `index.ts`.
+2. Importa i inicia el servidor.
+
+```typescript
+// index.ts
+import './infrastructure/server/server';
+```

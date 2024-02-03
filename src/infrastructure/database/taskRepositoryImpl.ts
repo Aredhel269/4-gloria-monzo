@@ -33,6 +33,16 @@ export class TaskRepositoryImpl implements TaskRepository {
         return this.tasks.findIndex((task) => task.id == id);
     }
 
+    updateList(task: Task) {
+        const index = this.findIndexById(task.id);
+        if (index !== -1) {
+            this.tasks[index] = task;
+            return task;    
+        } else {
+            throw new Error;
+        }
+    }
+
     listTask() {
         return this.tasks;
     }
