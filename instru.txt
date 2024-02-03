@@ -116,8 +116,34 @@ router.post('/', (req: Request, res: Response) => {
     res.status(201).json(createdTask);
 });
 
-// Implementa els altres endpoints CRUD aquí
+El codi proporcionat és el controlador de tasques (`TaskController`) que es responsabilitza de gestionar les peticions HTTP relacionades amb les tasques. 
+Aquí tens una explicació de com implementar els endpoints (GET, PUT, DELETE) al mateix controlador:
 
+1. **Petició POST per afegir una nova tasca (`/tasks`)**:
+   - Aquesta ruta accepta peticions POST a `/tasks`.
+   - Quan es rep una petició POST, el controlador extreu la tasca del cos de la sol·licitud (`req.body`).
+   - Utilitza el cas d'ús `CreateTaskUsecase` per crear la nova tasca i retorna la tasca creada com a resposta amb un codi d'estat 201 (Created).
+
+2. **Petició GET per obtenir la llista de tasques (`/tasks`)**:
+   - Afegeix una nova ruta GET a `/tasks`.
+   - Quan es rep una petició GET, utilitza el cas d'ús `GetTaskUsecase` per obtenir la llista completa de tasques.
+   - Retorna la llista de tasques com a resposta amb un codi d'estat 200 (OK).
+
+3. **Petició PUT per actualitzar una tasca existent (`/tasks/:id`)**:
+   - Afegeix una nova ruta PUT a `/tasks/:id`.
+   - Quan es rep una petició PUT, extreu la tasca actualitzada del cos de la sol·licitud (`req.body`) i l'identificador de la tasca dels paràmetres de la ruta (`req.params.id`).
+   - Utilitza el cas d'ús `PutTaskUsecase` per actualitzar la tasca existent amb l'identificador proporcionat.
+   - Retorna la tasca actualitzada com a resposta amb un codi d'estat 200 (OK).
+
+4. **Petició DELETE per eliminar una tasca (`/tasks/:id`)**:
+   - Afegeix una nova ruta DELETE a `/tasks/:id`.
+   - Quan es rep una petició DELETE, utilitza l'identificador de la tasca dels paràmetres de la ruta (`req.params.id`).
+   - Utilitza el cas d'ús `DeleteTaskUsecase` per eliminar la tasca amb l'identificador proporcionat.
+   - Retorna un missatge de confirmació com a resposta amb un codi d'estat 204 (No Content).
+
+Per implementar aquests altres endpoints, pots seguir el mateix patró que s'ha utilitzat per al endpoint POST, però adaptant-ho a cada cas d'ús específic i als seus requisits de sol·licitud i resposta.
+
+Espero que això t'ajudi a implementar els altres endpoints al teu controlador de tasques! Si tens alguna pregunta addicional o necessites més clarificacions, no dubtis a preguntar.
 export default router;
 ```
 
