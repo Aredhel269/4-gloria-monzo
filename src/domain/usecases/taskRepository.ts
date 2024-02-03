@@ -5,4 +5,5 @@ export interface TaskRepository {
     completeTask (id: number): void
     deleteTask (id: number): void
     listTask (): Task[]
+    findIndexById(id: number): number;
 }
