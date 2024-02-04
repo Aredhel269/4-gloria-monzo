@@ -6,11 +6,17 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/infrastructure/server/server.js",
-    "build": "tsc"
+    "build": "tsc --build tsconfig.json",
+    "build:watch": "tsc --build tsconfig.json --watch"  
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Aredhel269/todoApiRest.git"
+  },
+  "homepage": "https://github.com/Aredhel269/todoApiRest#readme",
   "dependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^20.11.16",
