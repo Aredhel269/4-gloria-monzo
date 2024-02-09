@@ -2,9 +2,10 @@ import { Task } from '../entities/task'
 
 export interface TaskRepository {
     createTask (task: Task): Task
-    completeTask (id: number): void
-    deleteTask (id: number): void
+    completeTask (id: string): void
+    deleteTask (id: string): void
     listTask (): Task[]
-    findIndexById(id: number): number;
+    findIndexById(id: string): number;
     updateList (task: Task): Task
+    getTaskById(id: string): Task | undefined;
 }

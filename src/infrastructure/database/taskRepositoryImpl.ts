@@ -2,48 +2,57 @@ import { Task } from "../../domain/entities/task";
 import { TaskRepository } from "../../domain/usecases/taskRepository";
 
 export class TaskRepositoryImpl implements TaskRepository {
-  // enlloc de constructor, inicio amb un array buit
-  private tasks: Task[] = []; // private --> accessible només a aquesta class
+    private tasks: Task[] = []; // Array per emmagatzemar les tasques
 
-    // mètodes
-    createTask(task: Task) {
-    this.tasks.push(task);
-    return task;
+    // Mètode per crear una nova task
+    createTask(task: Task): Task {
+        this.tasks.push(task); // Afegim la task al final de l'array
+        return task; // Retornem la task creada
     }
 
-    completeTask(id: number) {    
-        const taskIndex = this.findIndexById(id);
-        if (taskIndex !== -1) {
-            this.tasks[taskIndex].completed = true;
+    // Mètode per marcar una task com a completa
+    completeTask(id: string): void {
+        const taskIndex = this.findIndexById(id); // Cerquem l'índex de la task amb l'ID proporcionada
+        if (taskIndex !== -1) { // Si s'ha trobat la task
+            this.tasks[taskIndex].completed = true; // la marquem com a completada
         } else {
-            throw new Error(`Task with id ${id} not found`);
+            throw new Error(`Task with id ${id} not found`); 
         }
     }
 
-    deleteTask(id: number) {
-        const taskIndex = this.findIndexById(id);
-        if (taskIndex !== -1) {
-            this.tasks.splice(taskIndex, 1);
+    // Mètode per eliminar una task
+    deleteTask(id: string): void {
+        const taskIndex = this.findIndexById(id); // Cerquem l'índex de la task amb l'ID proporcionada
+        if (taskIndex !== -1) { // Si s'ha trobat la task
+            this.tasks.splice(taskIndex, 1); // l'eliminem de l'array
         } else {
-            throw new Error(`Task with id ${id} not found`);
+            throw new Error(`Task with id ${id} not found`); 
         }
     }
 
-    findIndexById(id: number) {
-        return this.tasks.findIndex((task) => task.id == id);
+    // Mètode per trobar l'índex d'una task segons la seva ID
+    findIndexById(id: string): number {
+        return this.tasks.findIndex(task => task.id === id); // Retorna l'índex de la task amb l'ID proporcionada
     }
 
-    updateList(task: Task) {
-        const index = this.findIndexById(task.id);
-        if (index !== -1) {
-            this.tasks[index] = task;
-            return task;    
+    // Mètode per obtenir una task segons la seva ID
+    getTaskById(id: string): Task | undefined {
+        return this.tasks.find(task => task.id === id); // Retorna la task amb l'ID proporcionada, si s'ha trobat
+    }
+
+    // Mètode per actualitzar una task a la llista
+    updateList(task: Task): Task {
+        const index = this.findIndexById(task.id); // Cerquem l'índex de la task amb l'ID proporcionada
+        if (index !== -1) { // Comprovem si s'ha trobat
+            this.tasks[index] = task; // Actualitzem la task
+            return task; // Retornem la task actualitzada
         } else {
-            throw new Error;
+            throw new Error(`Task with id ${task.id} not found`); 
         }
     }
 
-    listTask() {
-        return this.tasks;
+    // Mètode per obtenir totes les tasques
+    listTask(): Task[] {
+        return this.tasks; 
     }
 }

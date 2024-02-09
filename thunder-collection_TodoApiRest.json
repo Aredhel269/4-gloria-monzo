@@ -1,0 +1,80 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "TodoApiRest",
+    "dateExported": "2024-02-09T13:58:14.153Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "66ccff5f-ecf5-44d6-bf46-62b5047dafe2",
+            "colId": "09d49f06-d861-4c45-853a-753999d7752a",
+            "containerId": "",
+            "name": "Create Task",
+            "url": "http://localhost:3000/api/tasks",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-02-05T09:55:53.403Z",
+            "modified": "2024-02-08T10:22:42.735Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{  \"descript\": \"comprar pa\"}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "71516963-f20d-443a-944c-42f89063722e",
+            "colId": "09d49f06-d861-4c45-853a-753999d7752a",
+            "containerId": "",
+            "name": "Show Task list",
+            "url": "http://localhost:3000/api/tasks",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-02-08T10:24:17.310Z",
+            "modified": "2024-02-08T10:24:17.310Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "b36762fe-c734-4faa-a9de-e706e977e6c0",
+            "colId": "09d49f06-d861-4c45-853a-753999d7752a",
+            "containerId": "",
+            "name": "Edit Task",
+            "url": "http://localhost:3000/api/tasks/:id",
+            "method": "PUT",
+            "sortNum": 30000,
+            "created": "2024-02-09T13:39:45.393Z",
+            "modified": "2024-02-09T13:55:29.319Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\":\"21\",\n  \"description\":\"rentar terra\",\n  \"completed\": true\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "f3f556d0-eba3-4924-8873-3af7bfdee6b8",
+            "colId": "09d49f06-d861-4c45-853a-753999d7752a",
+            "containerId": "",
+            "name": "Delete Task",
+            "url": "http://localhost:3000/api/tasks/24",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2024-02-09T13:55:00.247Z",
+            "modified": "2024-02-09T13:55:00.247Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\":\"24\",\n  \"description\":\"prova a borrar\",\n  \"completed\": true\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}

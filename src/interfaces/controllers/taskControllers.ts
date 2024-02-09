@@ -19,28 +19,32 @@ const deleteTaskUsecase = new DeleteTaskUsecase(taskRepository);
 export const taskController = {
     // Endpoint POST per afegir una nova task
     createTask: (req: Request, res: Response) => {
-        const task: Task = req.body;
-        const createdTask = createTaskUsecase.execute(task);
+        const {id, description} = req.body;
+        const newTask = new Task(description);
+        const createdTask = createTaskUsecase.execute(newTask);
         res.status(201).json(createdTask);
     },
 
-    // Endpoint GET per obtenir listTask
+// Endpoint GET per obtenir listTask
     getTasks: (req: Request, res: Response) => {
-        const listTasks = getTaskUsecase.execute();
+        const listTasks = getTaskUsecase.executeGetAll();
         res.status(200).json(listTasks);
     },
 
-    // Endpoint PUT per actualitzar una task
+    // Endpoint PUT per editar una task
     putTask: (req: Request, res: Response) => {
-        const taskId: number = parseInt(req.params.id);
-        const updatedTask: Task = req.body
-        const updatedTaskResult = putTaskUsecase.execute (taskId, updatedTask)
-        res.status(200).json(updatedTaskResult)
-    },
+        const taskId: string = req.params.id;
+        const updatedTask: Task = req.body;
+        const updatedTaskResult = putTaskUsecase.execute(taskId, updatedTask);
+        res.status(200).json({
+            message: "Task updated successfully",
+            updatedTaskResult: updatedTaskResult
+        });
+    },    
 
     // Endpoint DELETE per eliminar una task
     deleteTask: (req: Request, res: Response) => {
-        const taskId: number = parseInt(req.params.id);
+        const taskId: string = req.params.id;
         deleteTaskUsecase.execute(taskId)
         res.status(204).send()
     },
