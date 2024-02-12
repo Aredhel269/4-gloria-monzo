@@ -17,38 +17,7 @@ The Todo List API is an application that provides endpoints for task management.
 
 The project is organized according to the hexagonal architecture:
 
-todo-listApi
-├── .github
-│  └── workflows
-│    └── pipeline.yml
-├── .gitignore
-├── package-lock.json
-├── package.json
-├── README.md
-├── src
-│  ├── application
-│  │  ├── createTaskUsecase.ts
-│  │  ├── deleteTaskUsecase.ts
-│  │  ├── getTaskUsecase.ts
-│  │  └── putTaskUsecase.ts
-│  ├── domain
-│  │  ├── entities
-│  │  │  └── task.ts
-│  │  └── usecases
-│  │    └── taskRepository.ts
-│  ├── infrastructure
-│  │  ├── database
-│  │  │  └── taskRepositoryImpl.ts
-│  │  └── server
-│  │    └── server.ts
-│  └── interfaces
-│    ├── controllers
-│    │  ├── taskControllers.ts
-│    │  └── todoControllers.ts
-│    └── http
-│      └── app.ts
-├── thunder-collection_TodoApiRest.json
-└── tsconfig.json
+![Project Structure](./todo-tree.png)
 
 - **src**: Contains the application's source code.
   - **application**: Contains the application's use cases.

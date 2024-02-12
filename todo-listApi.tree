@@ -1,0 +1,39 @@
+todo-listApi
+├── .github
+│  └── workflows
+│    └── pipeline.yml
+├── .gitignore
+├── package-lock.json
+├── package.json
+├── README.md
+├── src
+│  ├── application
+│  │  ├── createTaskUsecase.ts
+│  │  ├── deleteTaskUsecase.ts
+│  │  ├── getTaskUsecase.ts
+│  │  └── putTaskUsecase.ts
+│  ├── domain
+│  │  ├── entities
+│  │  │  └── task.ts
+│  │  └── usecases
+│  │    └── taskRepository.ts
+│  ├── infrastructure
+│  │  ├── database
+│  │  │  └── taskRepositoryImpl.ts
+│  │  └── server
+│  │    └── server.ts
+│  └── interfaces
+│    ├── controllers
+│    │  ├── taskControllers.ts
+│    │  └── todoControllers.ts
+│    └── http
+│      └── app.ts
+├── thunder-collection_TodoApiRest.json
+└── tsconfig.json
+
+
+
+
+
+
+
